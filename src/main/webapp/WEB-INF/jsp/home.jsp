@@ -13,6 +13,6 @@
 </head>
 <body>
 <h1>欢迎${user.username}</h1>
-
+<a href="alluser">查看用户列表</a>
 </body>
 </html>

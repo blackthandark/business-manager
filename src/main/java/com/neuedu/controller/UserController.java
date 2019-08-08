@@ -3,7 +3,6 @@ package com.neuedu.controller;
 import com.neuedu.consts.Const;
 import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.IUserService;
-import com.neuedu.service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user/")
@@ -47,7 +47,12 @@ public class UserController {
         public String index(){
             return "home";
         }
-
+        @RequestMapping("alluser")
+        public String allUser(HttpServletRequest request){
+            List<UserInfo> userInfoList=userService.findAllUser();
+            request.setAttribute("userlist",userInfoList);
+            return "userlist";
+        }
 
     }
 

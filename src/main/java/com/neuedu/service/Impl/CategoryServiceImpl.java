@@ -38,4 +38,9 @@ public class CategoryServiceImpl implements ICategoryService{
     public Category findCategoryById(int categoryId) {
         return categoryMapper.selectByPrimaryKey(categoryId);
     }
+
+    @Override
+    public Category findParentById(int categoryId) {
+        return categoryMapper.findParentById(categoryId);
+    }
 }

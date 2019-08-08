@@ -38,7 +38,7 @@ public class AuthorityInterceptor implements HandlerInterceptor{
             userinfo.setUsername(username);
             userinfo.setPassword(password);
             UserInfo resultuserinfo=userService.login(userinfo);
-            if(userinfo!=null){
+            if(resultuserinfo!=null){
                 session.setAttribute(Const.CURRENT_USER,userinfo);
             }
         }

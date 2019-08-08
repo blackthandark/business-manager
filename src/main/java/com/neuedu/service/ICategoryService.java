@@ -38,4 +38,6 @@ public interface ICategoryService {
      *
      */
     public  Category findCategoryById(int categoryId);
+
+    Category findParentById(int categoryId);
 }

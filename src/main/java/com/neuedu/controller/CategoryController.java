@@ -37,8 +37,11 @@ public class CategoryController {
     public String update(@PathVariable("id") Integer categotyId,
                          HttpServletRequest request){
         Category category=categoryService.findCategoryById(categotyId);
+        Category parentcategory=categoryService.findParentById(categotyId);
+        List<Category> categoryList=categoryService.findAll();
+        request.setAttribute("categorylist",categoryList);
         request.setAttribute("category",category);
-
+        request.setAttribute("parentcategory",parentcategory);
         return "categoryupdate";
 
     }
@@ -65,7 +68,9 @@ public class CategoryController {
         return "redirect:/user/category/find";
     }
     @RequestMapping(value = "add",method=RequestMethod.GET)
-    public String add(){
+    public String add(HttpServletRequest request){
+        List<Category> categoryList=categoryService.findAll();
+        request.setAttribute("categorylist",categoryList);
         return "categoryadd";
     }
     @RequestMapping(value = "add",method=RequestMethod.POST)
