@@ -45,7 +45,7 @@ public class UserController {
 
         @RequestMapping("home")
         public String index(){
-            return "home";
+            return "home/home";
         }
         @RequestMapping("alluser")
         public String allUser(HttpServletRequest request){

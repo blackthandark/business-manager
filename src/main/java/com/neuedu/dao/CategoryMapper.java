@@ -47,4 +47,6 @@ public interface CategoryMapper {
     int updateByPrimaryKey(@Param("category") Category record);
 
     Category findParentById(Integer id);
+
+    List<Category> findOther(Integer id);
 }

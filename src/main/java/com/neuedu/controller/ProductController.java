@@ -31,7 +31,7 @@ public class ProductController {
     public String find(HttpSession session){
         List<Product> productList=productService.findAll();
         session.setAttribute("productlist",productList);
-        return "productlist";
+        return "product/productlist";
     }
     @RequestMapping(value = "update/{id}",method = RequestMethod.GET)
     public String update(@PathVariable("id")Integer productid,
@@ -42,13 +42,14 @@ public class ProductController {
         request.setAttribute("category",category);
         request.setAttribute("categorylist",categoryList);
         request.setAttribute("product",product);
-        return "productupdate";
+        return "product/productupdate";
     }
     @RequestMapping(value = "update/{id}",method = RequestMethod.POST)
     public String update(Product product,
                          @RequestParam("images")MultipartFile[] uploadImages,
                          HttpServletRequest request){
-        String subImg=product.getSubImages();
+        String subImg=productService.findProductById(product.getId()).getSubImages();
+
         if(uploadImages!=null&&!uploadImages[0].getOriginalFilename().equals("")) {
             for (int i = 0; i<uploadImages.length;i++){
                 String uuid = UUID.randomUUID().toString();
@@ -75,14 +76,14 @@ public class ProductController {
         if(count>0){
             return "redirect:/user/product/find";
         }
-        return "productupdate";
+        return "product/productupdate";
     }
 
     @RequestMapping(value = "add",method = RequestMethod.GET)
     public String add(HttpServletRequest request){
         List<Category> categoryList=categoryService.findAll();
         request.setAttribute("categorylist",categoryList);
-        return "productadd";
+        return "product/productadd";
     }
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public String add(Product product,
@@ -109,7 +110,6 @@ public class ProductController {
                 }
                 if(i==0){
                     mainImg=newfileName;
-                    subImg=newfileName;
                 }
                 subImg=subImg+newfileName+",";
             }
@@ -121,7 +121,7 @@ public class ProductController {
         if(count>0){
             return "redirect:/user/product/find";
         }
-        return "add";
+        return "product/add";
     }
 
 

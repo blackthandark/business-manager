@@ -40,4 +40,6 @@ public interface ICategoryService {
     public  Category findCategoryById(int categoryId);
 
     Category findParentById(int categoryId);
+
+    public List<Category> findOther(int categoryId)throws MyException;
 }

@@ -44,7 +44,7 @@ public class AuthorityInterceptor implements HandlerInterceptor{
         }
         if((UserInfo)session.getAttribute(Const.CURRENT_USER)==null){
             try {
-                response.sendRedirect("/user/login");
+                response.sendRedirect("login");
             } catch (IOException e) {
                 e.printStackTrace();
             }

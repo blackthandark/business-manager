@@ -29,7 +29,7 @@ public class CategoryController {
         System.out.println(categoryList);
         session.setAttribute("categorylist",categoryList);
 
-        return "categorylist";
+        return "category/categorylist";
     }
 
 
@@ -38,11 +38,11 @@ public class CategoryController {
                          HttpServletRequest request){
         Category category=categoryService.findCategoryById(categotyId);
         Category parentcategory=categoryService.findParentById(categotyId);
-        List<Category> categoryList=categoryService.findAll();
+        List<Category> categoryList=categoryService.findOther(categotyId);
         request.setAttribute("categorylist",categoryList);
         request.setAttribute("category",category);
         request.setAttribute("parentcategory",parentcategory);
-        return "categoryupdate";
+        return "category/categoryupdate";
 
     }
 
@@ -59,7 +59,7 @@ public class CategoryController {
         if (count>0){
             return "redirect:/user/category/find";
         }
-        return "categoryupdate";
+        return "category/categoryupdate";
 
     }
     @RequestMapping("delete/{id}")
@@ -71,7 +71,7 @@ public class CategoryController {
     public String add(HttpServletRequest request){
         List<Category> categoryList=categoryService.findAll();
         request.setAttribute("categorylist",categoryList);
-        return "categoryadd";
+        return "category/categoryadd";
     }
     @RequestMapping(value = "add",method=RequestMethod.POST)
     public String add(Category category,HttpServletRequest request) throws UnsupportedEncodingException {
@@ -81,6 +81,6 @@ public class CategoryController {
         if(count>0){
             return "redirect:/user/category/find";
         }
-        return "categoryadd";
+        return "category/categoryadd";
     }
 }

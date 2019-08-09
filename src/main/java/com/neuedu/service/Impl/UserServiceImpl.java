@@ -17,27 +17,27 @@ public class UserServiceImpl implements IUserService{
     public UserInfo login(UserInfo userInfo) throws MyException {
         //step1:参数非空校验
         if(userInfo==null){
-            throw new MyException("参数不能为空");
+            throw new MyException("参数不能为空","/user/login");
         }
         if(userInfo.getUsername()==null||userInfo.getUsername().equals("")){
-            throw new MyException("用户名不能为空");
+            throw new MyException("用户名不能为空","/user/login");
         }
         if(userInfo.getPassword()==null||userInfo.getPassword().equals("")){
-            throw new MyException("密码不能为空");
+            throw new MyException("密码不能为空","/user/login");
         }
         //step2:判断用户名是否存在
         int username_result=userInfoMapper.exsistUsername(userInfo.getUsername());
         if(username_result==0){
-            throw new MyException("用户不存在");
+            throw new MyException("用户不存在","/user/login");
         }
 
         UserInfo userInfo_result=userInfoMapper.findByUsernameAdPassword(userInfo);
         if(userInfo_result==null){
-            throw new MyException("密码错误");
+            throw new MyException("密码错误","/user/login");
         }
 
         if(userInfo_result.getRole()==1){
-            throw new MyException("没有权限访问");
+            throw new MyException("没有权限访问","/user/login");
         }
 
         //
