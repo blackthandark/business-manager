@@ -31,4 +31,9 @@ public interface IProductService {
      */
     int updateProduct(Product record);
 
+    List<Product> findAll(Integer offset, Integer length);
+
+    int findTotalPageNo();
+
+    int updateStatus(int id,int status);
 }

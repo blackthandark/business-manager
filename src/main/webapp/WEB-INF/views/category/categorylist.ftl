@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
 
-                        <#list categorylist as category>
+                        <#list categoryInfoPage.pageList as category>
                         <tr>
                             <th>${category.id}</th>
                             <th>${category.name}</th>
@@ -36,13 +36,36 @@
                             <th>${category.createTime?string('yyyy-MM-dd HH:mm:ss')}</th>
                             <th>${category.updateTime?string('yyyy-MM-dd HH:mm:ss')}</th>
                             <th>
-                                <a href="update/${category.id}">修改</a>
-                                <a href="delete/${category.id}">删除</a>
+                                <a href="/user/category/update/${category.id}">修改</a>
+                                <a href="/user/category/delete/${category.id}">删除</a>
                             </th>
                         </tr>
                         </#list>
                         </tbody>
                     </table>
+                </div>
+            <#--分页-->
+                <div class="col-md-12 column">
+                    <ul class="pagination pull-right">
+                    <#if currentPage lte 1>
+                        <li class="disabled"><a href="#">上一页</a></li>
+                    <#else>
+                        <li><a href="/user/category/find/${currentPage - 1}">上一页</a></li>
+                    </#if>
+
+                    <#list 1..categoryInfoPage.getTotalPages() as index>
+                        <#if currentPage == index>
+                            <li class="disabled"><a href="#">${index}</a></li>
+                        <#else>
+                            <li><a href="/user/category/find/${index}">${index}</a></li>
+                        </#if>
+                    </#list>
+                    <#if currentPage gte categoryInfoPage.getTotalPages()>
+                        <li class="disabled"><a href="#">下一页</a></li>
+                    <#else>
+                        <li><a href="/user/category/find/${currentPage + 1}">下一页</a></li>
+                    </#if>
+                    </ul>
                 </div>
             </div>
         </div>

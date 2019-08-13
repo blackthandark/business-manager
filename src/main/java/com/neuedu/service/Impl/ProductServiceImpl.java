@@ -42,5 +42,20 @@ public class ProductServiceImpl implements IProductService{
         return productMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public List<Product> findAll(Integer offset, Integer length) {
+        return productMapper.selectByPage(offset,length);
+    }
+
+    @Override
+    public int findTotalPageNo() {
+        return productMapper.selectTotalPageNo();
+    }
+
+    @Override
+    public int updateStatus(int id, int status) {
+        return productMapper.updateStatus(id,status);
+    }
+
 
 }

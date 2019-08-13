@@ -49,4 +49,8 @@ public interface CategoryMapper {
     Category findParentById(Integer id);
 
     List<Category> findOther(Integer id);
+
+    List<Category> selectByPage(@Param("offset")Integer offset,@Param("length")Integer length);
+
+    int selectTotalPageNo();
 }

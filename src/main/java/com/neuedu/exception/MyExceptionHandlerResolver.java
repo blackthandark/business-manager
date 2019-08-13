@@ -13,7 +13,7 @@ public class MyExceptionHandlerResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest httpServletRequest,
                                          HttpServletResponse httpServletResponse,
                                          Object handler, Exception e) {
-
+        if(e instanceof MyException){
         MyException myException=(MyException)e;
         System.out.println(myException.getMessage());
         String error=myException.getDirector();
@@ -23,5 +23,7 @@ public class MyExceptionHandlerResolver implements HandlerExceptionResolver {
         modelAndView.addObject("url",error);
         modelAndView.addObject("msg",msg);
         return modelAndView;
+        }
+        return null;
     }
 }

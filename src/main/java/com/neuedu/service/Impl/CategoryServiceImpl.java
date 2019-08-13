@@ -48,4 +48,14 @@ public class CategoryServiceImpl implements ICategoryService{
     public List<Category> findOther(int categoryId) throws MyException {
         return categoryMapper.findOther(categoryId);
     }
+
+    @Override
+    public List<Category> findAll(Integer offset, Integer length) {
+        return categoryMapper.selectByPage(offset,length);
+    }
+
+    @Override
+    public int findTotalPageNo() {
+        return categoryMapper.selectTotalPageNo();
+    }
 }

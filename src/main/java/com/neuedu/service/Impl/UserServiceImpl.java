@@ -50,4 +50,29 @@ public class UserServiceImpl implements IUserService{
         return userInfoMapper.selectAll();
     }
 
+    @Override
+    public int addUser(UserInfo userInfo) throws MyException{
+        String username=userInfo.getUsername();
+        int count=userInfoMapper.exsistUsername(username);
+        if(count!=0){
+            throw new MyException("用户名已存在","/user/add");
+        }
+        return userInfoMapper.insert(userInfo);
+    }
+
+    @Override
+    public int delete(int id) {
+        return userInfoMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public UserInfo findById(int id) {
+        return userInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateUser(UserInfo userInfo) {
+        return userInfoMapper.updateByPrimaryKey(userInfo);
+    }
+
 }

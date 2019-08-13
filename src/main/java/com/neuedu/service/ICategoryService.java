@@ -42,4 +42,8 @@ public interface ICategoryService {
     Category findParentById(int categoryId);
 
     public List<Category> findOther(int categoryId)throws MyException;
+
+    public List<Category> findAll(Integer offset, Integer length);
+
+    int findTotalPageNo();
 }

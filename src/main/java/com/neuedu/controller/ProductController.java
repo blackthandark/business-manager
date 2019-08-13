@@ -1,6 +1,8 @@
 package com.neuedu.controller;
 
+import com.neuedu.consts.Const;
 import com.neuedu.pojo.Category;
+import com.neuedu.pojo.PageModel;
 import com.neuedu.pojo.Product;
 import com.neuedu.service.ICategoryService;
 import com.neuedu.service.IProductService;
@@ -27,12 +29,34 @@ public class ProductController {
     IProductService productService;
     @Autowired
     ICategoryService categoryService;
-    @RequestMapping("find")
-    public String find(HttpSession session){
-        List<Product> productList=productService.findAll();
-        session.setAttribute("productlist",productList);
+    @RequestMapping("find/{page}")
+    public String find(@PathVariable("page")Integer currentpage,
+                       HttpServletRequest request){
+        int total=(productService.findTotalPageNo()-1)/Const.PAGESIZE+1;
+        PageModel<Product> productPageModel=new PageModel<>();
+        productPageModel.setTotalPages(total);
+        productPageModel.setCurrentPage(currentpage);
+        productPageModel.setPageList(productService.findAll((currentpage-1)*Const.PAGESIZE,Const.PAGESIZE));
+        request.setAttribute("productInfoPage",productPageModel);
+        request.setAttribute("currentPage",productPageModel.getCurrentPage());
+        request.setAttribute("index",productPageModel.getTotalPages());
         return "product/productlist";
     }
+    @RequestMapping("find/1")
+    public String findlist(HttpServletRequest request){
+        int currentpage=1;
+        int total=(productService.findTotalPageNo()-1)/Const.PAGESIZE+1;
+        PageModel<Product> productPageModel=new PageModel<>();
+        productPageModel.setTotalPages(total);
+        productPageModel.setCurrentPage(currentpage);
+        productPageModel.setPageList(productService.findAll((currentpage-1)*Const.PAGESIZE,Const.PAGESIZE));
+        request.setAttribute("productInfoPage",productPageModel);
+        request.setAttribute("currentPage",productPageModel.getCurrentPage());
+        request.setAttribute("index",productPageModel.getTotalPages());
+        return "product/productlist";
+    }
+
+
     @RequestMapping(value = "update/{id}",method = RequestMethod.GET)
     public String update(@PathVariable("id")Integer productid,
                          HttpServletRequest request){
@@ -74,7 +98,7 @@ public class ProductController {
         product.setSubImages(subImg);
        int count=productService.updateProduct(product);
         if(count>0){
-            return "redirect:/user/product/find";
+            return "redirect:/user/product/find/1";
         }
         return "product/productupdate";
     }
@@ -119,7 +143,7 @@ public class ProductController {
         product.setSubImages(subImg);
         int count=productService.addProduct(product);
         if(count>0){
-            return "redirect:/user/product/find";
+            return "redirect:/user/product/find/1";
         }
         return "product/add";
     }
@@ -129,7 +153,13 @@ public class ProductController {
     @RequestMapping(value="delete/{id}")
     public String delete(@PathVariable("id")Integer productid){
         int count=productService.deleteProduct(productid);
-        return "redirect:/user/product/find";
+        return "redirect:/user/product/find/1";
     }
 
+    @RequestMapping(value = "status/{id}/{updatestatus}")
+    public String updatestatus(@PathVariable("id")Integer productid,
+                               @PathVariable("updatestatus")Integer productstatus){
+        int count=productService.updateStatus(productid,productstatus);
+        return "redirect:/user/product/find/1";
+    }
 }

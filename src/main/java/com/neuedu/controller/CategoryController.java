@@ -1,6 +1,9 @@
 package com.neuedu.controller;
 
+import cn.org.rapid_framework.page.Page;
+import com.neuedu.consts.Const;
 import com.neuedu.pojo.Category;
+import com.neuedu.pojo.PageModel;
 import com.neuedu.service.ICategoryService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +25,32 @@ public class CategoryController {
     @Autowired
     ICategoryService categoryService;
 
-    @RequestMapping("find")
-    public String findAll(HttpSession session){
-
-        List<Category> categoryList=categoryService.findAll();
-        System.out.println(categoryList);
-        session.setAttribute("categorylist",categoryList);
-
+    @RequestMapping("find/{page}")
+    public String findAll(@PathVariable("page")Integer currentpage,
+                          HttpServletRequest request){
+        int total=(categoryService.findTotalPageNo()-1)/Const.PAGESIZE+1;
+        PageModel<Category> categoryPageModel=new PageModel<>();
+        categoryPageModel.setCurrentPage(currentpage);
+        categoryPageModel.setTotalPages(total);
+        categoryPageModel.setPageList(categoryService.findAll(currentpage,Const.PAGESIZE));
+        request.setAttribute("categoryInfoPage",categoryPageModel);
+        request.setAttribute("currentPage",categoryPageModel.getCurrentPage());
+        request.setAttribute("index",categoryPageModel.getTotalPages());
         return "category/categorylist";
     }
-
+    @RequestMapping("find/1")
+    public String findlist(HttpServletRequest request){
+        int currentpage=1;
+        int total=(categoryService.findTotalPageNo()-1)/Const.PAGESIZE+1;
+        PageModel<Category> categoryPageModel=new PageModel<>();
+        categoryPageModel.setCurrentPage(currentpage);
+        categoryPageModel.setTotalPages(total);
+        categoryPageModel.setPageList(categoryService.findAll(currentpage,Const.PAGESIZE));
+        request.setAttribute("categoryInfoPage",categoryPageModel);
+        request.setAttribute("currentPage",categoryPageModel.getCurrentPage());
+        request.setAttribute("index",categoryPageModel.getTotalPages());
+        return "category/categorylist";
+    }
 
     @RequestMapping(value="update/{id}",method=RequestMethod.GET)
     public String update(@PathVariable("id") Integer categotyId,
@@ -57,7 +76,7 @@ public class CategoryController {
         int count=categoryService.updateCategory(category);
 
         if (count>0){
-            return "redirect:/user/category/find";
+            return "redirect:/user/category/find/1";
         }
         return "category/categoryupdate";
 
@@ -65,7 +84,7 @@ public class CategoryController {
     @RequestMapping("delete/{id}")
     public String delete(@PathVariable("id") Integer categotyId){
         int count=categoryService.deleteCategory(categotyId);
-        return "redirect:/user/category/find";
+        return "redirect:/user/category/find/1";
     }
     @RequestMapping(value = "add",method=RequestMethod.GET)
     public String add(HttpServletRequest request){
@@ -79,7 +98,7 @@ public class CategoryController {
         System.out.println(category.getName());
         int count=categoryService.addCategory(category);
         if(count>0){
-            return "redirect:/user/category/find";
+            return "redirect:/user/category/find/1";
         }
         return "category/categoryadd";
     }

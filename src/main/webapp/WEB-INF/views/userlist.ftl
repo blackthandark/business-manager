@@ -6,6 +6,7 @@
 <#--边栏sidebar-->
 <#include "common/nav.ftl">
 <#--主要内容content-->
+    <a href="/user/add">新增用户</a>
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -22,6 +23,7 @@
                         <th>权限</th>
                         <th>创建时间</th>
                         <th>修改时间</th>
+                        <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,6 +39,9 @@
                             <th>${userlist.role}</th>
                             <th>${userlist.createTime?string('yyyy-MM-dd HH:mm:ss')}</th>
                             <th>${userlist.updateTime?string('yyyy-MM-dd HH:mm:ss')}</th>
+                            <th><a href="/user/update/${userlist.id}">修改</a>
+                                <a href="/user/delete/${userlist.id}">删除</a>
+                            </th>
                         </tr>
                         </#list>
                         </tbody>

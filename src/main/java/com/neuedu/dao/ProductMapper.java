@@ -1,7 +1,10 @@
 package com.neuedu.dao;
 
 import com.neuedu.pojo.Product;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
+import java.util.Map;
 
 public interface ProductMapper {
     /**
@@ -43,4 +46,10 @@ public interface ProductMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Product record);
+
+    List<Product> selectByPage(@Param("offset")Integer offset,@Param("length")Integer length);
+
+    int selectTotalPageNo();
+
+    int updateStatus(@Param("id")Integer id,@Param("status")Integer status);
 }
