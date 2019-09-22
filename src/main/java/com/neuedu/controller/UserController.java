@@ -18,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/user/")
+/*@RequestMapping("/businessmanager/user/")*/
 public class UserController {
     @Autowired
     IUserService userService;
@@ -81,6 +82,7 @@ public class UserController {
             String md5password= MD5Utils.getMD5Code(userInfo.getPassword());
             userInfo.setPassword(md5password);
             userService.addUser(userInfo);
+            /*return "redirect:/businessmanager/user/alluser";*/
             return "redirect:/user/alluser";
         }
 
@@ -88,6 +90,7 @@ public class UserController {
         public String delete(@PathVariable("id")Integer userId){
             int count=userService.delete(userId);
             return "redirect:/user/alluser";
+            /*return "redirect:/businessmanager/user/alluser";*/
         }
 
         @RequestMapping(value = "update/{id}",method = RequestMethod.GET)
@@ -104,6 +107,7 @@ public class UserController {
             int count=userService.updateUser(userInfo);
             request.setAttribute("userinfo",userInfo);
             return "redirect:/user/alluser";
+            /*return "redirect:/businessmanager/user/alluser";*/
         }
     }
 

@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 
 public interface ProductMapper {
     /**
@@ -52,4 +54,12 @@ public interface ProductMapper {
     int selectTotalPageNo();
 
     int updateStatus(@Param("id")Integer id,@Param("status")Integer status);
+
+    List<Product> searchProduct(@Param("productId") Integer productId,
+                                @Param("keyword") String keyword);
+    List<Product> searchProductByCategory(Integer categoryId);
+
+    List<Product> searchByProductname(String searchText);
+
+    List<Product> searchByCategorySet(@Param("integerSet")Set<Integer> integerSet);
 }

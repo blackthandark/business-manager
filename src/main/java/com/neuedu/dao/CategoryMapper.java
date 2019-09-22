@@ -53,4 +53,8 @@ public interface CategoryMapper {
     List<Category> selectByPage(@Param("offset")Integer offset,@Param("length")Integer length);
 
     int selectTotalPageNo();
+
+    Category selectByName(String name);
+
+    List<Category> selectByLikeName(String name);
 }

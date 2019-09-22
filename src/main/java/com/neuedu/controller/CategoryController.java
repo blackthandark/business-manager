@@ -20,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/user/category/")
+/*@RequestMapping("/businessmanager/user/category/")*/
 public class CategoryController {
 
     @Autowired
@@ -32,7 +33,7 @@ public class CategoryController {
         PageModel<Category> categoryPageModel=new PageModel<>();
         categoryPageModel.setCurrentPage(currentpage);
         categoryPageModel.setTotalPages(total);
-        categoryPageModel.setPageList(categoryService.findAll(currentpage,Const.PAGESIZE));
+        categoryPageModel.setPageList(categoryService.findAll((currentpage-1)*Const.PAGESIZE,Const.PAGESIZE));
         request.setAttribute("categoryInfoPage",categoryPageModel);
         request.setAttribute("currentPage",categoryPageModel.getCurrentPage());
         request.setAttribute("index",categoryPageModel.getTotalPages());
@@ -45,7 +46,7 @@ public class CategoryController {
         PageModel<Category> categoryPageModel=new PageModel<>();
         categoryPageModel.setCurrentPage(currentpage);
         categoryPageModel.setTotalPages(total);
-        categoryPageModel.setPageList(categoryService.findAll(currentpage,Const.PAGESIZE));
+        categoryPageModel.setPageList(categoryService.findAll((currentpage-1)*Const.PAGESIZE,Const.PAGESIZE));
         request.setAttribute("categoryInfoPage",categoryPageModel);
         request.setAttribute("currentPage",categoryPageModel.getCurrentPage());
         request.setAttribute("index",categoryPageModel.getTotalPages());
@@ -77,6 +78,7 @@ public class CategoryController {
 
         if (count>0){
             return "redirect:/user/category/find/1";
+            /*return "redirect:/businessmanager/user/category/find/1";*/
         }
         return "category/categoryupdate";
 
@@ -85,6 +87,7 @@ public class CategoryController {
     public String delete(@PathVariable("id") Integer categotyId){
         int count=categoryService.deleteCategory(categotyId);
         return "redirect:/user/category/find/1";
+        /*return "redirect:/businessmanager/user/category/find/1";*/
     }
     @RequestMapping(value = "add",method=RequestMethod.GET)
     public String add(HttpServletRequest request){
@@ -99,6 +102,7 @@ public class CategoryController {
         int count=categoryService.addCategory(category);
         if(count>0){
             return "redirect:/user/category/find/1";
+            /*return "redirect:/businessmanager/user/category/find/1";*/
         }
         return "category/categoryadd";
     }

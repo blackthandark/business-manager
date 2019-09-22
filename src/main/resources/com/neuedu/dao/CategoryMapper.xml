@@ -70,6 +70,7 @@
     -->
     select id, parent_id, name, status, sort_order, create_time, update_time
     from neuedu_category
+    order by update_time DESC
   </select>
   <select id="findParentById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select b.id, b.parent_id, b.name, b.status, b.sort_order, b.create_time, b.update_time
@@ -85,6 +86,7 @@
     -->
     select id, parent_id, name, status, sort_order, create_time, update_time
     from neuedu_category where not id=#{id}
+    order by update_time DESC
   </select>
 
   <select id="selectByPage" resultMap="BaseResultMap" >
@@ -94,6 +96,7 @@
     -->
     select id, parent_id, name, status, sort_order, create_time, update_time
     from neuedu_category
+    order by update_time DESC
     limit #{offset},#{length}
   </select>
 
@@ -104,5 +107,16 @@
     -->
     select count(*)
     from neuedu_category
+  </select>
+
+  <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
+    select id, parent_id, name, status, sort_order, create_time, update_time
+    from neuedu_category where name=#{name}
+  </select>
+
+  <select id="selectByLikeName" parameterType="String" resultMap="BaseResultMap">
+    select id, parent_id, name, status, sort_order, create_time, update_time
+    from neuedu_category where name like #{name}
+    order by update_time DESC
   </select>
 </mapper>

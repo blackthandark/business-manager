@@ -6,6 +6,8 @@ import java.util.List;
 
 public class OrderVO implements Serializable{
     private Long orderNo;
+    private Integer userId;
+    private String userName;
     private BigDecimal payment;
     private Integer paymentType;
     private String paymentTypeDesc;
@@ -17,11 +19,35 @@ public class OrderVO implements Serializable{
     private String endTime;
     private String closeTime;
     private String createTime;
-    private List<OrderItemVO> orderItemVoList;
     private String imageHost;
     private Integer shippingId;
     private String receiverName;
     private ShippingVO shippingVo;
+    private List<OrderItemVO> orderItemVoList;
+
+    public List<OrderItemVO> getOrderItemVoList() {
+        return orderItemVoList;
+    }
+
+    public void setOrderItemVoList(List<OrderItemVO> orderItemVoList) {
+        this.orderItemVoList = orderItemVoList;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getOrderNo() {
         return orderNo;
@@ -117,14 +143,6 @@ public class OrderVO implements Serializable{
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public List<OrderItemVO> getOrderItemVoList() {
-        return orderItemVoList;
-    }
-
-    public void setOrderItemVoList(List<OrderItemVO> orderItemVoList) {
-        this.orderItemVoList = orderItemVoList;
     }
 
     public String getImageHost() {

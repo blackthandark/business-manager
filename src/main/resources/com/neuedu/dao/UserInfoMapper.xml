@@ -66,6 +66,7 @@
     update_time, ip
     from neuedu_user
     where id = #{id,jdbcType=INTEGER}
+    order by update_time DESC
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     <!--
@@ -75,6 +76,7 @@
     select id, username, password, email, phone, question, answer, role, create_time, 
     update_time, ip
     from neuedu_user
+    order by update_time DESC
   </select>
 
   <select id="exsistUsername" parameterType="string" resultType="int">
@@ -84,5 +86,6 @@
   <select id="findByUsernameAdPassword" parameterType="com.neuedu.pojo.UserInfo" resultMap="BaseResultMap">
     select id, username, password, email, phone, question, answer, role, create_time,
     update_time, ip from neuedu_user where username=#{user.username} and password=#{user.password}
+    order by update_time DESC
   </select>
 </mapper>

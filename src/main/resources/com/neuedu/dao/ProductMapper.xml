@@ -90,6 +90,7 @@
     update_time, sub_images, detail
     from neuedu_product
     where id = #{id,jdbcType=INTEGER}
+    order by update_time DESC
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     <!--
@@ -99,6 +100,7 @@
     select id, category_id, name, subtitle, main_image, price, stock, status, create_time, 
     update_time, sub_images, detail
     from neuedu_product
+    order by update_time DESC
   </select>
   <select id="selectByPage" resultMap="BaseResultMap" >
     <!--
@@ -109,6 +111,7 @@
     update_time, sub_images, detail
     from neuedu_product
     limit #{offset},#{length}
+    order by update_time DESC
   </select>
   <select id="selectTotalPageNo" resultType="java.lang.Integer" >
     <!--
@@ -121,4 +124,51 @@
   <update id="updateStatus" >
     update neuedu_product set status=#{status},update_time=now() where id=#{id}
   </update>
+  
+  
+  <select id="searchProduct" parameterType="map" resultMap="BaseResultMap">
+    select id, category_id, name, subtitle, main_image, price, stock, status, create_time,
+    update_time, sub_images, detail
+    from neuedu_product
+    <where>
+      1=1
+      <if test="productId!=null">
+        and id=#{productId}
+      </if>
+      <if test="keyword!=null">
+        and name like #{keyword}
+      </if>
+      and status=1
+    </where>
+    order by update_time DESC
+  </select>
+
+    <select id="searchProductByCategory" parameterType="int" resultMap="BaseResultMap">
+        select id, category_id, name, subtitle, main_image, price, stock, status, create_time,
+        update_time, sub_images, detail
+        from neuedu_product
+        where category_id=#{categoryId} and status=1
+        order by update_time DESC
+    </select>
+
+    <select id="searchByProductname" parameterType="string" resultMap="BaseResultMap">
+      select id, category_id, name, subtitle, main_image, price, stock, status, create_time,
+      update_time, sub_images, detail
+      from neuedu_product
+      where name like #{searchText} and status=1
+      order by update_time DESC
+    </select>
+  <select id="searchByCategorySet"  resultMap="BaseResultMap">
+    select id, category_id, name, subtitle, main_image, price, stock, status, create_time,
+    update_time, sub_images, detail
+    from neuedu_product
+    <where>
+    category_id in
+    <foreach collection="integerSet" item="categoryId" open="(" close=")" separator=",">
+      #{categoryId}
+    </foreach>
+      and status=1
+    </where>
+    order by update_time DESC
+  </select>
 </mapper>

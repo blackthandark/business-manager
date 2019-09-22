@@ -2,7 +2,6 @@ package com.neuedu.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class ProductDetailVO implements Serializable{
     private String imageHost;
@@ -11,6 +10,7 @@ public class ProductDetailVO implements Serializable{
     private Integer is_banner;
     private Integer id;
     private Integer categoryId;
+    private String category;
     private String name;
     private  String subtitle;
     private String mainImage;
@@ -19,8 +19,34 @@ public class ProductDetailVO implements Serializable{
     private BigDecimal price;
     private Integer stock;
     private Integer status;
+    private String statusDesc;
     private String createTime;
     private String updateTime;
+    private String[] subImgArr;
+
+    public String[] getSubImgArr() {
+        return subImgArr;
+    }
+
+    public void setSubImgArr(String[] subImgArr) {
+        this.subImgArr = subImgArr;
+    }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getImageHost() {
         return imageHost;

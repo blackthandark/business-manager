@@ -1,7 +1,11 @@
 package com.neuedu.pojo;
 
-import java.util.List;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+@Component
+@Scope("session")
 public class PageModel<T> {
     private int currentPage;
     private int totalPages;
